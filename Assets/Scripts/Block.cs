@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    // Start is called before the first frame update
+  public BoxCollider2D bc;
+
   void Start()
   {
-
-    InvokeRepeating("Fall", 2.0f, 0.5f);
-      
+    bc = GetComponent<BoxCollider2D>();
+    InvokeRepeating("Fall", 1.0f, 0.2f);
   }
 
-    // Update is called once per frame
   void Update()
   {
       
   }
 
   void Fall() {
-
     if(transform.localPosition.y < -17) {
       Debug.Log("PLACED");
       CancelInvoke();
@@ -28,8 +26,5 @@ public class Block : MonoBehaviour
 
     transform.Translate(0, -1f, 0);
     Debug.Log(transform.localPosition.y);
-
-
   }
-
 }
