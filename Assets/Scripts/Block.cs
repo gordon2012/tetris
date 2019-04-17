@@ -38,6 +38,9 @@ public class Block : MonoBehaviour
       fall = Time.time;
       if(!IsValid()) {
         transform.position += new Vector3(0, 1, 0);
+        foreach(Transform mino in transform) {
+          gameScript.UpdateGrid((int)mino.position.x, (int)mino.position.y);
+        }
         placed = true;
         gameScript.SpawnTetromino();
       }

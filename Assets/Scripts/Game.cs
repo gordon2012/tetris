@@ -7,18 +7,26 @@ public class Game : MonoBehaviour
   public GameObject[] tetrominos;
 
   public static int gridWidth = 10;
-  public static int gridHeight = 20;
+  public static int gridHeight = 23;
+
+  public static bool[,] grid = new bool[gridWidth, gridHeight];
 
   void Start() {
     SpawnTetromino();
+
   }
 
-  void Update() {
-      
+  public void UpdateGrid(int x, int y) {
+    grid[x,y] = true;
   }
 
   public bool IsInsideGrid(Vector2 pos) {
-    return ((int)pos.x >= 0 && (int)pos.x < gridWidth & (int)pos.y >= 0);
+    int x = (int)pos.x;
+    int y = (int)pos.y;
+    if(!(x >= 0 && x < gridWidth && y >= 0)) {
+      return false;
+    }
+    return !grid[x,y];
   }
 
   public void SpawnTetromino() {
