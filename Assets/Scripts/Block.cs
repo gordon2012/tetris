@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-  public float delay = 1.0f;
+  public float delay = 1f;
 
   private float fall;
   private Game gameScript;
+  private bool placed = false;
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
   }
 
   void Update() {
+    if(placed) {
+      return;
+    }
     if(Input.GetKeyDown(KeyCode.RightArrow)) {
       transform.position += new Vector3(1, 0, 0);
       if(!IsValid()) {
@@ -34,6 +38,8 @@ public class Block : MonoBehaviour
       fall = Time.time;
       if(!IsValid()) {
         transform.position += new Vector3(0, 1, 0);
+        placed = true;
+        gameScript.SpawnTetromino();
       }
     }      
   }
