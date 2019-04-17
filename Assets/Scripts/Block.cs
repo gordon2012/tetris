@@ -26,6 +26,9 @@ public class Block : MonoBehaviour
       }
     } else if(Input.GetKeyDown(KeyCode.UpArrow)) {
       transform.Rotate(0, 0, 90);
+      if(!IsValid()) {
+        transform.Rotate(0, 0, -90);
+      }
     } else if(Input.GetKeyDown(KeyCode.DownArrow) || Time.time > fall + delay) {
       transform.position += new Vector3(0, -1, 0);
       fall = Time.time;
