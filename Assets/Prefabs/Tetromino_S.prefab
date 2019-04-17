@@ -127,6 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
+  rotations:
+  - 0
+  - 90
 --- !u!1 &2132380615469030432
 GameObject:
   m_ObjectHideFlags: 0

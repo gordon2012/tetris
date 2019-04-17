@@ -7,7 +7,7 @@ public class Game : MonoBehaviour
   public GameObject[] tetrominos;
 
   public static int gridWidth = 10;
-  public static int gridHeight = 23;
+  public static int gridHeight = 24;
 
   public static bool[,] grid = new bool[gridWidth, gridHeight];
 
@@ -21,8 +21,8 @@ public class Game : MonoBehaviour
   }
 
   public bool IsInsideGrid(Vector2 pos) {
-    int x = (int)pos.x;
-    int y = (int)pos.y;
+    int x = (int)Mathf.Round(pos.x);
+    int y = (int)Mathf.Round(pos.y);
     if(!(x >= 0 && x < gridWidth && y >= 0)) {
       return false;
     }

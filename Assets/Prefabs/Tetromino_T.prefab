@@ -364,3 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
+  rotations:
+  - 0
+  - 90
+  - 180
+  - 270
