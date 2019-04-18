@@ -3220,6 +3220,8 @@ MonoBehaviour:
   - {fileID: 1764163600277628133, guid: 74c4305e129026143bd8ea00b8667850, type: 3}
   - {fileID: 8076209421619930686, guid: 4aaafb8d6ebf440448ede2e2bd9b20e5, type: 3}
   - {fileID: 2232768394654133641, guid: 2d1b27257e7b83c4186aa267caa0e137, type: 3}
+  gridDot: {fileID: 5079217439530453647, guid: 83f72d98511304447856d50d39f290e9, type: 3}
+  debug: 0
 --- !u!1 &1561270140
 GameObject:
   m_ObjectHideFlags: 0

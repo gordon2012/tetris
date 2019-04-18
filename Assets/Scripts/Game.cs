@@ -5,6 +5,8 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
   public GameObject[] tetrominos;
+  public GameObject gridDot;
+  public bool debug = false;
 
   public static int gridWidth = 10;
   public static int gridHeight = 24;
@@ -13,11 +15,13 @@ public class Game : MonoBehaviour
 
   void Start() {
     SpawnTetromino();
-
   }
 
   public void UpdateGrid(int x, int y) {
     grid[x,y] = true;
+    if(debug) {
+      Instantiate(gridDot, new Vector3(x, y, 0), Quaternion.identity);
+    }
   }
 
   public bool IsInsideGrid(Vector2 pos) {

@@ -45,7 +45,9 @@ public class Block : MonoBehaviour
       if(!IsValid()) {
         transform.position += new Vector3(0, 1, 0);
         foreach(Transform mino in transform) {
-          gameScript.UpdateGrid((int)mino.position.x, (int)mino.position.y);
+          int x = (int)Mathf.Round(mino.position.x);
+          int y = (int)Mathf.Round(mino.position.y);
+          gameScript.UpdateGrid(x, y);
         }
         placed = true;
         gameScript.SpawnTetromino();
