@@ -45,12 +45,13 @@ public class Block : MonoBehaviour
       if(!IsValid()) {
         transform.position += new Vector3(0, 1, 0);
         foreach(Transform mino in transform) {
-          int x = (int)Mathf.Round(mino.position.x);
-          int y = (int)Mathf.Round(mino.position.y);
-          gameScript.UpdateGrid(x, y);
+          int x = (int)Mathf.Round(mino.transform.position.x);
+          int y = (int)Mathf.Round(mino.transform.position.y);
+          gameScript.UpdateGrid(x, y, mino.gameObject);
         }
         placed = true;
         gameScript.SpawnTetromino();
+        DestroyImmediate(this.gameObject, true);
       }
     }      
   }

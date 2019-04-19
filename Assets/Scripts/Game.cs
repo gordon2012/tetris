@@ -11,17 +11,44 @@ public class Game : MonoBehaviour
   public static int gridWidth = 10;
   public static int gridHeight = 24;
 
-  public static bool[,] grid = new bool[gridWidth, gridHeight];
+  public static GameObject[,] grid = new GameObject[gridWidth, gridHeight];
 
   void Start() {
     SpawnTetromino();
   }
 
-  public void UpdateGrid(int x, int y) {
-    grid[x,y] = true;
+  public void UpdateGrid(int x, int y, GameObject mino) {
+    grid[x,y] = mino;
     if(debug) {
       Instantiate(gridDot, new Vector3(x, y, 0), Quaternion.identity);
+    } else {
+      // Debug.Log(mino.transform.rotation);
     }
+    Instantiate(mino, new Vector3(x, y, 0), mino.transform.rotation);
+
+    // int
+
+    GameObject[] dots = GameObject.FindGameObjectsWithTag("Debug");
+    foreach(GameObject dot in dots) {
+      GameObject.Destroy(dot);
+    }
+
+
+    for(int i = gridHeight - 1; i >= 0; i--) {
+      int rowCount = 0;
+      for(int j = 0; j < gridWidth; j++) {
+        Debug.Log(grid[j,i]);
+        if(grid[j,i] != null) {
+          Instantiate(gridDot, new Vector3(j, i, 0), Quaternion.identity);
+          rowCount++;
+        }
+      }
+      if(rowCount >= 10) {
+        Debug.Log("Row: " + i + ", count: " + rowCount);
+        Instantiate(gridDot, new Vector3(-2, i, 0), Quaternion.identity);
+      }
+    }
+
   }
 
   public bool IsInsideGrid(Vector2 pos) {
@@ -30,7 +57,7 @@ public class Game : MonoBehaviour
     if(!(x >= 0 && x < gridWidth && y >= 0)) {
       return false;
     }
-    return !grid[x,y];
+    return grid[x,y] == null;
   }
 
   public void SpawnTetromino() {
