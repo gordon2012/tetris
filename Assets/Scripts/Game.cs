@@ -11,20 +11,24 @@ public class Game : MonoBehaviour
   public static int gridWidth = 10;
   public static int gridHeight = 24;
 
-  public static GameObject[,] grid = new GameObject[gridWidth, gridHeight];
+  public static Transform[,] grid = new Transform[gridWidth, gridHeight];
 
   void Start() {
     SpawnTetromino();
   }
 
-  public void UpdateGrid(int x, int y, GameObject mino) {
-    grid[x,y] = mino;
-    if(debug) {
-      Instantiate(gridDot, new Vector3(x, y, 0), Quaternion.identity);
-    } else {
-      // Debug.Log(mino.transform.rotation);
-    }
-    Instantiate(mino, new Vector3(x, y, 0), mino.transform.rotation);
+  public void UpdateGrid(int x, int y, Transform mino) {
+    // xxx: x, y
+
+    Transform newMino = Instantiate(mino, new Vector3(x, y, 0), mino.transform.rotation);
+    grid[x,y] = newMino;
+
+    // if(debug) {
+    //   Instantiate(gridDot, new Vector3(x, y, 0), Quaternion.identity);
+    // } else {
+    //   // Debug.Log(mino.transform.rotation);
+    // }
+
 
     // int
 
@@ -33,23 +37,77 @@ public class Game : MonoBehaviour
       GameObject.Destroy(dot);
     }
 
-
+    // int minoCount = 0;
     for(int i = gridHeight - 1; i >= 0; i--) {
       int rowCount = 0;
       for(int j = 0; j < gridWidth; j++) {
-        Debug.Log(grid[j,i]);
+        // Debug.Log(grid[j,i] != null);
         if(grid[j,i] != null) {
           Instantiate(gridDot, new Vector3(j, i, 0), Quaternion.identity);
+          rowCount++;
+          // minoCount++;
+        }
+      }
+      if(rowCount >= 10) {
+        // Debug.Log("Row: " + i + ", count: " + rowCount);
+        Instantiate(gridDot, new Vector3(-2, i, 0), Quaternion.identity);
+
+
+
+      }
+    }
+
+    DestroyRow(0);
+
+  }
+
+  public void CheckRows() {
+    for(int i = gridHeight - 1; i >= 0; i--) {
+      int rowCount = 0;
+      for(int j = 0; j < gridWidth; j++) {
+        if(grid[j,i] != null) {
           rowCount++;
         }
       }
       if(rowCount >= 10) {
-        Debug.Log("Row: " + i + ", count: " + rowCount);
-        Instantiate(gridDot, new Vector3(-2, i, 0), Quaternion.identity);
+
+        // destroy this row, move others down
+        DestroyRow(i);
+
+      }
+    }
+  }
+
+  public void DestroyRow(int y) {
+
+    for(int x = 0; x < gridWidth; x++) {
+      if(grid[x,y] != null) {
+        DestroyImmediate(grid[x,y].gameObject, true);
+        grid[x,y] = null;
       }
     }
 
+
+    for(int h = y; h < gridHeight; h++) {
+      // Instantiate(gridDot, new Vector3(-3, h, 0), Quaternion.identity);
+
+
+        if(h == gridHeight - 1) {
+          Debug.Log("TOP");
+        }
+
+      for(int w = 0; w < gridWidth; w++) {
+
+
+
+
+      }
+
+
+    }
+
   }
+
 
   public bool IsInsideGrid(Vector2 pos) {
     int x = (int)Mathf.Round(pos.x);
@@ -57,6 +115,7 @@ public class Game : MonoBehaviour
     if(!(x >= 0 && x < gridWidth && y >= 0)) {
       return false;
     }
+    // Debug.Log(x + ", " + y + ": " + grid[x,y]);
     return grid[x,y] == null;
   }
 

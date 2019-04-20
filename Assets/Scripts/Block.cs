@@ -47,13 +47,14 @@ public class Block : MonoBehaviour
         foreach(Transform mino in transform) {
           int x = (int)Mathf.Round(mino.transform.position.x);
           int y = (int)Mathf.Round(mino.transform.position.y);
-          gameScript.UpdateGrid(x, y, mino.gameObject);
+          gameScript.UpdateGrid(x, y, mino);
         }
+        gameScript.CheckRows();
         placed = true;
         gameScript.SpawnTetromino();
         DestroyImmediate(this.gameObject, true);
       }
-    }      
+    }
   }
 
   bool IsValid() {
