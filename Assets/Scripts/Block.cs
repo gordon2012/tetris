@@ -5,22 +5,17 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
   public float delay = 1f;
-
   public float[] rotations;
-  private int rotation = 0;
 
+  private int rotation = 0;
   private float fall;
   private Game gameScript;
-  private bool placed = false;
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
   }
 
   void Update() {
-    if(placed) {
-      return;
-    }
     if(Input.GetKeyDown(KeyCode.RightArrow)) {
       transform.position += new Vector3(1, 0, 0);
       if(!IsValid()) {
@@ -44,13 +39,7 @@ public class Block : MonoBehaviour
       fall = Time.time;
       if(!IsValid()) {
         transform.position += new Vector3(0, 1, 0);
-        foreach(Transform mino in transform) {
-          int x = (int)Mathf.Round(mino.transform.position.x);
-          int y = (int)Mathf.Round(mino.transform.position.y);
-          gameScript.UpdateGrid(x, y, mino);
-        }
-        gameScript.CheckRows();
-        placed = true;
+        gameScript.PlaceTetromino(transform);
         gameScript.SpawnTetromino();
         DestroyImmediate(this.gameObject, true);
       }
