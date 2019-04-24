@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-  public float delay = 1f;
-  public float[] rotations;
-
-  private int rotation = 0;
-  private float fall;
   private Game gameScript;
+
+  public float[] rotations;
+  private int rotation = 0;
+
+  private float delay = 1f;
+  private float fall;
+
+  private bool isPushing = false;
+  private float pushDelay = 0.3f;
+  private float pushSpeed = 0.03f;
+  private float push;
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
@@ -34,14 +40,30 @@ public class Block : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rotations[oldRotation]);
         rotation = oldRotation;
       }
-    } else if(Input.GetKeyDown(KeyCode.DownArrow) || Time.time > fall + delay) {
-      transform.position += new Vector3(0, -1, 0);
-      fall = Time.time;
-      if(!IsValid()) {
-        transform.position += new Vector3(0, 1, 0);
-        gameScript.PlaceTetromino(transform);
-        gameScript.SpawnTetromino();
-        DestroyImmediate(this.gameObject, true);
+    } else {
+      bool isDown = false;
+
+      if(Input.GetKeyDown(KeyCode.DownArrow) || Time.time > fall + delay) {
+        isDown = true;
+      } else if(isPushing && Time.time > push + pushSpeed) {
+        isDown = true;
+      } else if(Input.GetKey(KeyCode.DownArrow) && Time.time > push + pushDelay) {
+        isPushing = true;
+      }
+      if(Input.GetKeyUp(KeyCode.DownArrow)) {
+        isPushing = false;
+      }
+
+      if(isDown) {
+        transform.position += new Vector3(0, -1, 0);
+        push = Time.time;
+        fall = Time.time;
+        if(!IsValid()) {
+          transform.position += new Vector3(0, 1, 0);
+          gameScript.PlaceTetromino(transform);
+          gameScript.SpawnTetromino();
+          DestroyImmediate(this.gameObject, true);
+        }
       }
     }
   }
