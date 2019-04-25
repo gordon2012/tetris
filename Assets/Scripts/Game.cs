@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class Game : MonoBehaviour
   public static int gridHeight = 24;
 
   public static Transform[,] grid = new Transform[gridWidth, gridHeight];
+
+  public int[] scoreValues = {0, 40, 120, 400, 1600};
+  private int score = 0;
+  public Text hudScore;
 
   void Start() {
     SpawnTetromino();
@@ -27,6 +32,7 @@ public class Game : MonoBehaviour
   }
 
   public void CheckRows() {
+    int numDestroyed = 0;
     for(int i = gridHeight - 1; i >= 0; i--) {
       int rowCount = 0;
       for(int j = 0; j < gridWidth; j++) {
@@ -36,7 +42,12 @@ public class Game : MonoBehaviour
       }
       if(rowCount >= 10) {
         DestroyRow(i);
+        numDestroyed++;
       }
+    }
+    if(scoreValues[numDestroyed] > 0) {
+      score += scoreValues[numDestroyed];
+      hudScore.text = score.ToString();
     }
 
     if(debug) {
