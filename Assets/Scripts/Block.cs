@@ -43,8 +43,18 @@ public class Block : MonoBehaviour
       rotation = (rotation + 1) % rotations.Length;
       transform.rotation = Quaternion.Euler(0, 0, rotations[rotation]);
       if(!IsValid()) {
-        transform.rotation = Quaternion.Euler(0, 0, rotations[oldRotation]);
-        rotation = oldRotation;
+        transform.position += new Vector3(1, 0, 0);
+        if(!IsValid()) {
+          transform.position += new Vector3(-2, 0, 0);
+          if(!IsValid()) {
+            transform.position += new Vector3(1, -1, 0);
+            if(!IsValid()) {
+              transform.position += new Vector3(0, 1, 0);
+              transform.rotation = Quaternion.Euler(0, 0, rotations[oldRotation]);
+              rotation = oldRotation;
+            }
+          }
+        }
       }
     } else {
       bool isDown = false;
