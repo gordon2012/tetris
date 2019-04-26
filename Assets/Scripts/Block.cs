@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Block : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Block : MonoBehaviour
   void Start() {
     gameScript = FindObjectOfType<Game>();
     fall = Time.time;
+    if(!IsValid()) {
+      SceneManager.LoadScene("GameOver");
+    }
   }
 
   void Update() {
