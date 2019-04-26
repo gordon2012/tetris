@@ -19,6 +19,7 @@ public class Block : MonoBehaviour
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
+    fall = Time.time;
   }
 
   void Update() {

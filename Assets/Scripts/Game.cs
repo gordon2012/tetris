@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
   public bool debug = false;
 
   public static int gridWidth = 10;
-  public static int gridHeight = 24;
+  public static int gridHeight = 20;
 
   public static Transform[,] grid = new Transform[gridWidth, gridHeight];
 
@@ -90,7 +90,7 @@ public class Game : MonoBehaviour
   public bool IsInsideGrid(Vector2 pos) {
     int x = (int)Mathf.Round(pos.x);
     int y = (int)Mathf.Round(pos.y);
-    if(!(x >= 0 && x < gridWidth && y >= 0)) {
+    if(!(x >= 0 && x < gridWidth && y >= 0 && y < gridHeight)) {
       return false;
     }
     return grid[x,y] == null;
@@ -98,6 +98,6 @@ public class Game : MonoBehaviour
 
   public void SpawnTetromino() {
     GameObject tetromino = tetrominos[Random.Range(0, tetrominos.Length)];
-    Instantiate(tetromino, new Vector3(4, 21, 0), Quaternion.identity);
+    Instantiate(tetromino, new Vector3(4, 19, 0), Quaternion.identity);
   }
 }
