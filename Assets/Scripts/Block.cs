@@ -20,6 +20,7 @@ public class Block : MonoBehaviour
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
+    push = Time.time;
     fall = Time.time;
     if(!IsValid()) {
       SceneManager.LoadScene("GameOver");
