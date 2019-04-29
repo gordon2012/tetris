@@ -5829,7 +5829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1473197870
 Transform:
   m_ObjectHideFlags: 0
@@ -5918,10 +5918,11 @@ MonoBehaviour:
   - {fileID: 2232768394654133641, guid: 2d1b27257e7b83c4186aa267caa0e137, type: 3}
   gridDot: {fileID: 5079217439530453647, guid: 83f72d98511304447856d50d39f290e9, type: 3}
   debug: 0
-  scoreValues: 0000000028000000780000009001000040060000
+  scoreValues: 0000000028000000640000002c010000b0040000
   hudScore: {fileID: 1393865876}
   level: 0
   hudLevel: {fileID: 2065828757}
+  lastSpawn: -1
 --- !u!1 &1479515466
 GameObject:
   m_ObjectHideFlags: 0
@@ -7439,7 +7440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1815584518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7457,10 +7458,11 @@ MonoBehaviour:
   - {fileID: 5760544972792726238, guid: d9c5bda3e20b4c4499939c3b3756baae, type: 3}
   gridDot: {fileID: 5079217439530453647, guid: 83f72d98511304447856d50d39f290e9, type: 3}
   debug: 1
-  scoreValues: 0000000028000000780000009001000040060000
+  scoreValues: 0000000028000000640000002c010000b0040000
   hudScore: {fileID: 1393865876}
   level: 0
   hudLevel: {fileID: 2065828757}
+  lastSpawn: -1
 --- !u!4 &1815584519
 Transform:
   m_ObjectHideFlags: 0

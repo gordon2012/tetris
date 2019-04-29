@@ -22,6 +22,8 @@ public class Game : MonoBehaviour
   private int rows = 0;
   public Text hudLevel;
 
+  public int lastSpawn = -1;
+
   void Start() {
     SpawnTetromino();
     hudLevel.text = level.ToString();
@@ -99,8 +101,12 @@ public class Game : MonoBehaviour
   }
 
   public void SpawnTetromino() {
-    GameObject tetromino = tetrominos[Random.Range(0, tetrominos.Length)];
-    Instantiate(tetromino, new Vector3(4, 19, 0), Quaternion.identity);
+    int random = Random.Range(0, tetrominos.Length + 1);
+    if(random == tetrominos.Length || random == lastSpawn) {
+      random = Random.Range(0, tetrominos.Length);
+    }
+    lastSpawn = random;
+    Instantiate(tetrominos[random], new Vector3(4, 19, 0), Quaternion.identity);
   }
 
   void IncreaseScore(int rowsDestroyed) {
