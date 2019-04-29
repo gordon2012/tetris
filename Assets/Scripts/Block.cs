@@ -10,7 +10,7 @@ public class Block : MonoBehaviour
   public float[] rotations;
   private int rotation = 0;
 
-  private float delay = 1f;
+  private float delay;
   private float fall;
 
   private bool isPushing = false;
@@ -20,10 +20,17 @@ public class Block : MonoBehaviour
 
   void Start() {
     gameScript = FindObjectOfType<Game>();
-    push = Time.time;
-    fall = Time.time;
     if(!IsValid()) {
       SceneManager.LoadScene("GameOver");
+    }
+    push = Time.time;
+    fall = Time.time;
+    if(gameScript.level >= 25) {
+      delay = 0.02f;
+    } else if(gameScript.level >= 9) {
+      delay = 0.1f - (gameScript.level - 9) * 0.005f;
+    } else {
+      delay = 0.8f - gameScript.level * 0.08f;
     }
   }
 

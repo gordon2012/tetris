@@ -14,12 +14,17 @@ public class Game : MonoBehaviour
 
   public static Transform[,] grid = new Transform[gridWidth, gridHeight];
 
-  public int[] scoreValues = {0, 40, 120, 400, 1600};
+  public int[] scoreValues = {0, 40, 100, 300, 1200};
   private int score = 0;
   public Text hudScore;
 
+  public int level = 0;
+  private int rows = 0;
+  public Text hudLevel;
+
   void Start() {
     SpawnTetromino();
+    hudLevel.text = level.ToString();
   }
 
   public void PlaceTetromino(Transform tetromino) {
@@ -45,10 +50,7 @@ public class Game : MonoBehaviour
         numDestroyed++;
       }
     }
-    if(scoreValues[numDestroyed] > 0) {
-      score += scoreValues[numDestroyed];
-      hudScore.text = score.ToString();
-    }
+    IncreaseScore(numDestroyed);
 
     if(debug) {
       GameObject[] dots = GameObject.FindGameObjectsWithTag("Debug");
@@ -99,5 +101,17 @@ public class Game : MonoBehaviour
   public void SpawnTetromino() {
     GameObject tetromino = tetrominos[Random.Range(0, tetrominos.Length)];
     Instantiate(tetromino, new Vector3(4, 19, 0), Quaternion.identity);
+  }
+
+  void IncreaseScore(int rowsDestroyed) {
+    if(scoreValues[rowsDestroyed] > 0) {
+      score += scoreValues[rowsDestroyed];
+      hudScore.text = score.ToString();
+    }
+    rows += rowsDestroyed;
+    if(rows >= (level + 1) * 10) {
+      level++;
+      hudLevel.text = level.ToString();
+    }
   }
 }
