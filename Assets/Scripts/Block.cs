@@ -18,6 +18,10 @@ public class Block : MonoBehaviour
   private float pushSpeed = 0.03f;
   private float push;
 
+  private bool hMove = false;
+  private bool hDelay = false;
+  private float hTime;
+
   void Start() {
     gameScript = FindObjectOfType<Game>();
     if(!IsValid()) {
@@ -34,18 +38,44 @@ public class Block : MonoBehaviour
     }
   }
 
-  void Update() {
-    if(Input.GetKeyDown(KeyCode.RightArrow)) {
-      transform.position += new Vector3(1, 0, 0);
-      if(!IsValid()) {
-        transform.position += new Vector3(-1, 0, 0);
-      }
-    } else if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+  void Move(float dir) {
+    if(dir == -1) {
       transform.position += new Vector3(-1, 0, 0);
       if(!IsValid()) {
         transform.position += new Vector3(1, 0, 0);
       }
-    } else if(Input.GetKeyDown(KeyCode.UpArrow) && rotations.Length > 0) {
+    } else if(dir == 1) {
+      transform.position += new Vector3(1, 0, 0);
+      if(!IsValid()) {
+        transform.position += new Vector3(-1, 0, 0);
+      }
+    }
+  }
+
+  void Update() {
+    float hDir = Input.GetAxisRaw("Horizontal");
+
+    if(!hMove && hDir != 0) {
+      Move(hDir);
+      hMove = true;
+      hTime = Time.time;
+    }
+
+    if(hMove && !hDelay && Time.time > hTime + pushDelay) {
+      hDelay = true;
+    }
+
+    if(hMove && hDelay && Time.time > hTime + pushSpeed) {
+      Move(hDir);
+      hTime = Time.time;
+    }
+
+    if(hMove && hDir == 0) {
+      hMove = false;
+      hDelay = false;
+    }
+
+    if(Input.GetKeyDown(KeyCode.UpArrow) && rotations.Length > 0) {
       int oldRotation = rotation;
       rotation = (rotation + 1) % rotations.Length;
       transform.rotation = Quaternion.Euler(0, 0, rotations[rotation]);
