@@ -22,9 +22,14 @@ public class Game : MonoBehaviour
   private int rows = 0;
   public Text hudLevel;
 
-  public int lastSpawn = -1;
+  private int lastSpawn = -1;
+
+  public Transform previewPoint;
+  private GameObject previewTetromino;
+  private int nextSpawn = -1;
 
   void Start() {
+    PreviewTetromino();
     SpawnTetromino();
     hudLevel.text = level.ToString();
   }
@@ -100,13 +105,22 @@ public class Game : MonoBehaviour
     return grid[x,y] == null;
   }
 
-  public void SpawnTetromino() {
+  public void PreviewTetromino() {
     int random = Random.Range(0, tetrominos.Length + 1);
     if(random == tetrominos.Length || random == lastSpawn) {
       random = Random.Range(0, tetrominos.Length);
     }
-    lastSpawn = random;
-    Instantiate(tetrominos[random], new Vector3(4, 19, 0), Quaternion.identity);
+    lastSpawn = nextSpawn;
+    nextSpawn = random;
+
+    Destroy(previewTetromino);
+    previewTetromino = Instantiate(tetrominos[random], previewPoint.position, Quaternion.identity);
+  }
+
+  public void SpawnTetromino() {
+    GameObject spawnedTetromino = Instantiate(tetrominos[nextSpawn], new Vector3(4, 19, 0), Quaternion.identity);
+    spawnedTetromino.GetComponent<Block>().Init();
+    PreviewTetromino();
   }
 
   void IncreaseScore(int rowsDestroyed) {

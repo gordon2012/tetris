@@ -22,11 +22,14 @@ public class Block : MonoBehaviour
   private bool hDelay = false;
   private float hTime;
 
+  public bool active = false;
+
+  public void Init() {
+    active = true;
+  }
+
   void Start() {
     gameScript = FindObjectOfType<Game>();
-    if(!IsValid()) {
-      SceneManager.LoadScene("GameOver");
-    }
     push = Time.time;
     fall = Time.time;
     if(gameScript.level >= 25) {
@@ -35,6 +38,10 @@ public class Block : MonoBehaviour
       delay = 0.1f - (gameScript.level - 9) * 0.005f;
     } else {
       delay = 0.8f - gameScript.level * 0.08f;
+    }
+
+    if(active && !IsValid()) {
+      SceneManager.LoadScene("GameOver");
     }
   }
 
@@ -53,6 +60,9 @@ public class Block : MonoBehaviour
   }
 
   void Update() {
+    if(!active) {
+      return;
+    }
     float hDir = Input.GetAxisRaw("Horizontal");
 
     if(!hMove && hDir != 0) {
